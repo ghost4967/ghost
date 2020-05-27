@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
-import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductComponent } from '../../components/product/product.component';
 
@@ -21,7 +20,6 @@ import { ProductComponent } from '../../components/product/product.component';
     ClipboardModule
   ],
   declarations: [
-    UserProfileComponent,
     ProductComponent
   ]
 })

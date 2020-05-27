@@ -10,15 +10,17 @@ import { ProductService } from '../../service/product/product.service';
 export class ProductComponent implements OnInit {
 
   productForm: FormGroup;
+  product = new Array();
 
-  constructor(private formBuilder: FormBuilder, private productService: ProductService) { }
-
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder, private productService: ProductService) {
     this.productFormInit();
   }
 
+  ngOnInit(): void {
+  }
+
   productFormInit() {
-    this.productForm = this.formBuilder.group({
+      this.productForm = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       price: new FormControl('', Validators.required),
       quantity: new FormControl('', Validators.required),
@@ -32,14 +34,19 @@ export class ProductComponent implements OnInit {
     console.log(this.productForm.value)
     const product = {
       name: this.productForm.value.name,
-      price: this.productForm.value.price,
-      quantity: this.productForm.value.quantity,
-      typeUnity: this.productForm.value.typeUnity,
-      description: this.productForm.value.description,
-      image: this.productForm.value.image,
+      price: 5,
+      quantity: 5,
+      typeUnity: "",
+      description: "",
+      image: "",
 
     }
-    this.productService.insert(product);
+    //this.productService.insert(product);
+  }
+  changeSuit(item, id) {
+    console.log(item.target.value)
+    this.product.push({ id : item.target.value});
+    console.log(this.product[0].target.value)
   }
 
 }
