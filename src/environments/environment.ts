@@ -11,7 +11,7 @@ export const environment = {
     databaseURL: "https://ghost-4e1b8.firebaseio.com",
     projectId: "ghost-4e1b8",
     storageBucket: "ghost-4e1b8.appspot.com",
-    messagingSenderId: "sender-id",
+    messagingSenderId: "649415627054",
     appId: "app-id",
     measurementId: "G-measurement-id",
   }

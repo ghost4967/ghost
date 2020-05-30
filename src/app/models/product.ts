@@ -5,5 +5,5 @@ export interface Product {
     quantity: number;
     typeUnity: String;
     description: String,
-    image: String,
+    image: any,
 }
