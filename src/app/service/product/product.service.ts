@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../../models/product';
-import { firestore } from 'firebase';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  collectionName = 'Product';
+  collectionName = 'Products';
 
   constructor(private firestore: AngularFirestore) { }
 
