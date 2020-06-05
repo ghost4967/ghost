@@ -1,0 +1,37 @@
+<div class="col-md-12">
+  <div *ngFor="let line of lines" class="card m-1 p-1 bg-light">
+    <div class="row">
+      <div class="col-md-2">
+        <img src="{{line.product.image}}" alt="{{line.product.name}}" style="widows: 100px;">
+      </div>
+      <div class="col-md-10">
+        <div class="card-text bg-white p-1">
+          <h4>
+            {{line.product.name}}
+            <button class="btn-sm btn-danger float-right" (click)="removeLine(line.product._id)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+          </h4>
+        </div>
+        <div class="card-text bg-white p-1">
+          <h3>{{line.product.typeUnity}}</h3>
+          <span class="badge badge-pill badge-primary float-right">
+            {{line.product.price | currency:"Bs."}}
+          </span>
+          <input type="number" value="1" min="1" (change)="updateQuantity(line, $event.target.value)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Subtotal:</h2>
+    </div>
+    <div class="col-md-8">
+      {{cartSubTotal  | currency:"Bs."}}
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn btn-sm btn-danger">Realizar Pedido</button>
+  </div>
+</div>
