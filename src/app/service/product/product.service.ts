@@ -16,7 +16,7 @@ export class ProductService {
   }
 
   getAll() {
-    return this.firestore.collection(this.collectionName).snapshotChanges();
+    return this.firestore.collection(this.collectionName).valueChanges();
   }
 
   get(id: string) {

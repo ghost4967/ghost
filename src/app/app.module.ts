@@ -18,12 +18,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    ProductComponent
+    ProductComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserAnimationsModule,
