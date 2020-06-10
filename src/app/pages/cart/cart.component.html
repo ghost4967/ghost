@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-6">
   <div *ngFor="let line of lines" class="card m-1 p-1 bg-light">
     <div class="row">
       <div class="col-md-2">
@@ -9,8 +9,8 @@
           <h4>
             {{line.product.name}}
             <button class="btn-sm btn-danger float-right" (click)="removeLine(line.product._id)">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </button>
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
           </h4>
         </div>
         <div class="card-text bg-white p-1">
@@ -23,15 +23,15 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4">
-      <h2>Subtotal:</h2>
-    </div>
-    <div class="col-md-8">
-      {{cartSubTotal  | currency:"Bs."}}
-    </div>
+</div>
+<div class="row" class="card">
+  <div class="col-md-4">
+    <h2>Subtotal:</h2>
   </div>
-  <div class="row">
-    <button class="btn btn-sm btn-danger">Realizar Pedido</button>
+  <div class="col-md-8">
+    {{cartSubTotal  | currency:"Bs."}}
+  </div>
+  <div class="col-md-8">
+    <button type="submit" class="btn btn-danger mt-4">Realizar Pedido</button>
   </div>
 </div>

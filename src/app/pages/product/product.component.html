@@ -49,14 +49,21 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-typeUnity">Foto</label>
-                                <input type="text" id="input-typeUnity" placeholder="Foto del producto"
-                                    class="form-control" formControlName="image">
+                                <input type="file" id="input-typeUnity" placeholder="Foto del producto"
+                                    (change)="chargeImage($event)" accept="image/jpeg,image/jpg,image/png"> 
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                    [style.width]="(uploadPercent | async) + '%'">
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary mt-4" (click)="createProduct()">Crear</button>
+                    <button type="submit" class="btn btn-primary mt-4" (click)="createProduct()"
+                        [disabled]="!productForm.valid">Crear</button>
                 </div>
             </form>
         </div>

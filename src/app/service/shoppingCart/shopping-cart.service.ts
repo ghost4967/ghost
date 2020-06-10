@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../../models/product';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class ShoppingCartService {
 
-  collectionName = 'Products';
+  collectionName = 'shoppingcart';
 
   constructor(private firestore: AngularFirestore) { }
 
@@ -16,7 +17,7 @@ export class ProductService {
   }
 
   getAll() {
-    return this.firestore.collection(this.collectionName).valueChanges();
+    return this.firestore.collection(this.collectionName).snapshotChanges();
   }
 
   get(id: string) {

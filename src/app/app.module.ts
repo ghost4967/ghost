@@ -18,13 +18,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     ProductComponent,
-    CartComponent
+    CartComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -38,7 +41,8 @@ import { environment } from '../environments/environment';
     FixedPluginModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

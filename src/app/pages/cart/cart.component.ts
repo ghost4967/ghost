@@ -1,5 +1,6 @@
 import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { Product } from 'app/models/product';
+import { element } from 'protractor';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class CartComponent implements OnInit {
   }
 
   updateQuantity(product: Product, quantity: number) {
-    const line = this.lines.find(b => b.product.name === product.name);
+    const line = this.lines.find(element => element.product.name === product.name);
 
     if (line !== undefined) {
       line.quantity = Number(quantity);
