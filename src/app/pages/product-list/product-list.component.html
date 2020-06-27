@@ -1,0 +1,23 @@
+<div class="alert col-md-12 col-sm-12 col-12" *ngIf="productsInCard == true">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Usted tiene Productos en el carrito de compras
+</div>
+<div *ngFor="let product of productList">
+    <div *ngIf="product != null">
+        <div class="card col-md-4 col-sm-5 col-11">
+            <img class="card-img-top" src="{{product.image}}" alt="Card image cap" width="100" height="150">
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title" style="display: inline; margin-right: 15%;">{{product.name}}</h5>
+                    <h5 class="card-title text-right" style="display: inline;">{{product.price}} Bs.</h5>
+                </div>
+                <h6 class="card-text">{{product.typeUnity}} - {{product.quantity}}</h6>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+            <div class="card-body text-right">
+                <button (click)="addProduct(product)" type="submit"
+                    class="btn btn-primary btn-round mt-3">Añadir</button>
+            </div>
+        </div>
+    </div>
+</div>

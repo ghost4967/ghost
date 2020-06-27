@@ -17,13 +17,19 @@ export class ProductComponent implements OnInit {
   urlImage: Observable<any>;
   uploadPercent: Observable<number>;
   image;
+  shoppingCart: any;
   constructor(private formBuilder: FormBuilder, private productService: ProductService, private storage: StorageService) {
     this.productFormInit();
   }
-
+  productList: Array<any> = [];
+  
   ngOnInit(): void {
+    this.productService.getAll().subscribe(res => this.productList.push(res[0]))
+    console.log(this.productList)
   }
-
+    
+      
+  
   onUpload() {
     const id = Math.random().toString(36).substring(2);
     const filePath = `uploads/profile_${id}`;
@@ -67,6 +73,10 @@ export class ProductComponent implements OnInit {
   
   createProduct() {
     this.onUpload();
+  }
+
+  addProduct(product){
+    console.log(product)
   }
 
 }
