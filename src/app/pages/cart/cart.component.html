@@ -1,25 +1,20 @@
-<div class="col-md-6">
-  <div *ngFor="let line of lines" class="card m-1 p-1 bg-light">
-    <div class="row">
-      <div class="col-md-2">
-        <img src="{{line.product.image}}" alt="{{line.product.name}}" style="widows: 100px;">
+<div *ngIf="products != null || products != ''">
+  <div *ngFor="let product of products">
+    <div class="card col-md-4 col-sm-5 col-11">
+      <img class="card-img-top" src="{{product.product.image}}" alt="Card image cap"  width="100" height="150">
+      <div class="card-body">
+        <div>
+          <h5 class="card-title" style="display: inline; margin-right: 15%;">{{product.product.name}}</h5>
+          <h5 class="card-title text-right" style="display: inline;">{{product.product.price}} Bs.</h5>
+        </div>
+        <h6 class="card-text">{{product.product.typeUnity}} - {{product.product.quantity}}</h6>
+        <p class="card-text">{{product.product.description}}</p>
+        <input type="number" min="1" value="{{product.quantity}}" (change)="updateQuantity(product, $event.target.value)">
+        <button class="btn-sm btn-danger float-right" (click)="removeLine(product.product._id)">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
       </div>
-      <div class="col-md-10">
-        <div class="card-text bg-white p-1">
-          <h4>
-            {{line.product.name}}
-            <button class="btn-sm btn-danger float-right" (click)="removeLine(line.product._id)">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-          </h4>
-        </div>
-        <div class="card-text bg-white p-1">
-          <h3>{{line.product.typeUnity}}</h3>
-          <span class="badge badge-pill badge-primary float-right">
-            {{line.product.price | currency:"Bs."}}
-          </span>
-          <input type="number" value="1" min="1" (change)="updateQuantity(line, $event.target.value)">
-        </div>
+      <div class="card-body text-right">
       </div>
     </div>
   </div>

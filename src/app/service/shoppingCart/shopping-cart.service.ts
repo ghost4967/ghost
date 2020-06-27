@@ -8,27 +8,33 @@ import { firestore } from 'firebase';
 })
 export class ShoppingCartService {
 
-  collectionName = 'shoppingcart';
+  collectionName = 'shoppingCarts';
 
   constructor(private firestore: AngularFirestore) { }
 
-  insert(product: Product) {
-    return this.firestore.collection(this.collectionName).add(product);
+  insert(shoppingCart: any) {
+    return this.firestore.collection(this.collectionName).doc(shoppingCart.userId).set(shoppingCart);
   }
 
   getAll() {
-    return this.firestore.collection(this.collectionName).snapshotChanges();
+    return this.firestore.collection(this.collectionName).valueChanges();
   }
 
   get(id: string) {
     return this.firestore
-    .collection(this.collectionName)
-    .doc(id)
-    .valueChanges();
+      .collection(this.collectionName)
+      .doc(id)
+      .valueChanges();
   }
 
-  update(product: Product) {
-    return this.firestore.collection(this.collectionName).doc(product._id).set(product);
+  getByIdToPromes(id: string) {
+    return this.firestore
+      .collection(this.collectionName)
+    .doc(id).get().toPromise().then((item) => ({ id: item.id, ...item.data() }))
+  }
+
+update(shoppingCart: any) {
+    return this.firestore.collection(this.collectionName).doc(shoppingCart.userId).set(shoppingCart);
   }
 
   delete(id: string) {

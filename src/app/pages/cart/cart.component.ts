@@ -1,7 +1,9 @@
 import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { Product } from 'app/models/product';
 import { element } from 'protractor';
-
+import { ShoppingCart } from '../../models/shoppingCart';
+import { ShoppingCartService } from '../../service/shoppingCart/shopping-cart.service';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
@@ -10,60 +12,53 @@ import { element } from 'protractor';
 })
 export class CartComponent implements OnInit {
 
-  lines: CartLine[] = [];
+  products: any = [];
   quantity: number = 1;
   cartSubTotal: number = 0;
-
-  constructor() {
+  shoppingCard: any;
+  constructor(private shoppingService: ShoppingCartService, private formBuilder: FormBuilder) {
     let product: Product;
-    product = {
-      name: 'cocacola',
-      description: 'jsjsa',
-      price: 13,
-      typeUnity: 'lt',
-      quantity: 56,
-      image: ''
-    };
-    this.addProduct(product);
+    this.shoppingService.getByIdToPromes('userId1').then(res => {
+      console.log(res)
+      if (res != undefined) {
+        this.shoppingCard = res;
+        this.products = res;
+        this.products = this.products.shoppingCart
+        console.log(this.products)
+        this.recalculate();
+      }
+    });
   }
 
   ngOnInit(): void {
   }
 
-  addProduct(product: Product) {
-    this.lines.push(new CartLine(product, this.quantity));
+  updateQuantity(product, quantity: number) {
+    this.products.forEach(element => {
+      if (element.product.name == product.product.name) {
+        element.quantity = quantity
+        this.upDateProduct();
+      }
+    });
     this.recalculate();
   }
 
-  updateQuantity(product: Product, quantity: number) {
-    const line = this.lines.find(element => element.product.name === product.name);
-
-    if (line !== undefined) {
-      line.quantity = Number(quantity);
-    }
-
-    this.recalculate();
+  upDateProduct(){
+    this.shoppingCard.shoppingCart = this.products;
+    this.shoppingService.update(this.shoppingCard)
   }
 
   removeLine(id: string) {
-    const index = this.lines.findIndex(line => line.product._id === id);
-    this.lines.splice(index, 1);
+    const index = this.products.findIndex(line => line.product._id === id);
+    this.products.splice(index, 1);
+    this.upDateProduct();
     this.recalculate();
   }
 
-  clear() {
-    this.lines = [];
-    this.cartSubTotal = 0;
-  }
-
   private recalculate() {
-    this.lines.forEach(l => {
-      this.cartSubTotal += (l.quantity * l.product.price);
+    this.cartSubTotal = 0;
+    this.products.forEach(element => {
+      this.cartSubTotal += (element.quantity * element.product.price);
     });
   }
-}
-
-export class CartLine {
-
-  constructor(public product: Product, public quantity: number) { }
 }
