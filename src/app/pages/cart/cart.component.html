@@ -1,15 +1,16 @@
-<div *ngIf="products != null || products != ''">
-  <div *ngFor="let product of products">
-    <div class="card col-md-4 col-sm-5 col-11">
-      <img class="card-img-top" src="{{product.product.image}}" alt="Card image cap"  width="100" height="150">
-      <div class="card-body">
-        <div>
+<div class="container-fluid">
+  <div *ngIf="products != null || products != ''" class="row">
+    <div *ngFor="let product of products" class="card col-md-2 col-sm-5 col-11">
+      <div>
+        <img class="card-img-top" src="{{product.product.image}}" alt="Card image cap" width="100" height="150">
+        <div class="card-body">
           <h5 class="card-title" style="display: inline; margin-right: 15%;">{{product.product.name}}</h5>
           <h5 class="card-title text-right" style="display: inline;">{{product.product.price}} Bs.</h5>
         </div>
         <h6 class="card-text">{{product.product.typeUnity}} - {{product.product.quantity}}</h6>
         <p class="card-text">{{product.product.description}}</p>
-        <input type="number" min="1" value="{{product.quantity}}" (change)="updateQuantity(product, $event.target.value)">
+        <input type="number" min="1" value="{{product.quantity}}"
+          (change)="updateQuantity(product, $event.target.value)">
         <button class="btn-sm btn-danger float-right" (click)="removeLine(product.product._id)">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
@@ -18,15 +19,15 @@
       </div>
     </div>
   </div>
-</div>
-<div class="row" class="card">
-  <div class="col-md-4">
-    <h2>Subtotal:</h2>
-  </div>
-  <div class="col-md-8">
-    {{cartSubTotal  | currency:"Bs."}}
-  </div>
-  <div class="col-md-8">
-    <button type="submit" class="btn btn-danger mt-4">Realizar Pedido</button>
+  <div class="row card">
+    <div class="col-md-4">
+      <h2>Subtotal:</h2>
+    </div>
+    <div class="col-md-8">
+      {{cartSubTotal  | currency:"Bs."}}
+    </div>
+    <div class="col-md-8">
+      <button type="submit" class="btn btn-danger mt-4">Realizar Pedido</button>
+    </div>
   </div>
 </div>
