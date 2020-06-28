@@ -10,7 +10,7 @@
         <h6 class="card-text">{{product.product.typeUnity}} - {{product.product.quantity}}</h6>
         <p class="card-text">{{product.product.description}}</p>
         <input type="number" min="1" value="{{product.quantity}}"
-          (change)="updateQuantity(product, $event.target.value)" class="col-md-4">
+          (change)="updateQuantity(product, $event.target.value)" class="col-4">
         <button class="btn-sm btn-danger float-right" (click)="removeLine(product.product._id)">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
