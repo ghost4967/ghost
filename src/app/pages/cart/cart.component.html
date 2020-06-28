@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div *ngIf="products != null || products != ''" class="row">
-    <div *ngFor="let product of products" class="card col-md-2 col-sm-5 col-11">
+    <div *ngFor="let product of products" class="card col-md-3 col-sm-5 col-11">
       <div>
         <img class="card-img-top" src="{{product.product.image}}" alt="Card image cap" width="100" height="150">
         <div class="card-body">
@@ -10,7 +10,7 @@
         <h6 class="card-text">{{product.product.typeUnity}} - {{product.product.quantity}}</h6>
         <p class="card-text">{{product.product.description}}</p>
         <input type="number" min="1" value="{{product.quantity}}"
-          (change)="updateQuantity(product, $event.target.value)">
+          (change)="updateQuantity(product, $event.target.value)" class="col-md-4">
         <button class="btn-sm btn-danger float-right" (click)="removeLine(product.product._id)">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
