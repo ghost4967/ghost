@@ -1,6 +1,11 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+<<<<<<< HEAD
+=======
+import { GoogleMapsModule } from '@angular/google-maps';
+import { ToastrModule } from "ngx-toastr";
+>>>>>>> Fix import
 
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
