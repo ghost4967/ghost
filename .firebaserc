@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ghost-4e1b8": {
+      "hosting": {
+        "pd-free-angularcli": [
+          "ghost-4e1b8"
+        ]
+      }
+    }
+  }
+}
