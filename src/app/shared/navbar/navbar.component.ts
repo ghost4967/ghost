@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   private nativeElement: Node;
   private toggleButton;
   private sidebarVisible: boolean;
+  public isLogged: boolean = false;
   dataUser = JSON.parse(localStorage.getItem('user'));
 
   public isCollapsed = true;
@@ -47,7 +48,7 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
-    this.isLogged();
+    this.getCurrentUser();
   }
 
   getTitle() {
@@ -118,10 +119,6 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
     this.authService.signOut();
-  }
-
-  isLogged(): boolean {
-    return this.authService.isLoggedIn();
   }
 
   getCurrentUser() {

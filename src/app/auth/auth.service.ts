@@ -40,14 +40,15 @@ export class AuthService {
   // Sign in with email/password
   async signIn(email: string, password: string) {
     try {
+      if (this.isLoggedIn) {
       const result = await this.afAuth.signInWithEmailAndPassword(
         email,
         password
       );
-      if (this.isLoggedIn) {
         this.setUserDataVerifycated(result.user);
-        this.notificationSuccess("Bien venido");
+        this.notificationSuccess("Bienvenido");
         this.router.navigate(["product"]);
+        //return result;
       } else {
         localStorage.removeItem("user");
         this.notificationError(
@@ -55,10 +56,7 @@ export class AuthService {
         );
         this.router.navigate(["product"]);
       }
-      return result;
     }  catch (error) {
-      console.log(error);
-      console.log('mensajee del error-------',error.message);
       this.router.navigate(["product"]);
       this.notificationError(error.message);
     }
@@ -94,7 +92,7 @@ export class AuthService {
   }
 
   // Returns true when user is looged in and email is verified
-  isLoggedIn(): boolean {
+  get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return user !== null && user.emailVerified !== false ? true : false;
   }
