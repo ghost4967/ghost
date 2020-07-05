@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Modes } from './modes';
 
 @Component({
   selector: 'app-ghost-maps',
@@ -9,29 +10,40 @@ export class GhostMapsComponent implements AfterViewInit {
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
   map: google.maps.Map;
-  @Input('lat') lat: number = -17.4131228;
-  @Input('lng') lng: number = -66.0939994;
-  coordinates = new google.maps.LatLng(this.lat, this.lng);
+  private _mode = '';
+  @Input() lat: number = -17.4131228;
+  @Input() lng: number = -66.0939994;
+  @Input('mode')
+  set mode(mode: string) {
+    this._mode = (mode === Modes.Edit || mode === Modes.View) ? mode : 'Invalid mode';
+  };
+  get mode(): string { return this._mode; };
+
   mapOptions: google.maps.MapOptions = {
-    center: this.coordinates,
     zoom: 16
   };
   marker = new google.maps.Marker({
-    position: this.coordinates,
-    map: this.map,
-    draggable: true
+    map: this.map
   });
 
   constructor() { }
 
   ngAfterViewInit() {
-    this.mapInitializer();
+    const position = new google.maps.LatLng(this.lat, this.lng);
+    this.initMap(position);
   }
 
-  mapInitializer() {
+  initMap(position) {
     this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
     this.marker.setMap(this.map);
-    this.marker.addListener('dragend', () => this.setPosition(this.marker.getPosition()))
+    this.marker.setDraggable(this.mode === Modes.Edit);
+    if (this.mode == Modes.Edit) {
+      this.marker.addListener('dragend', () => this.setPosition(this.marker.getPosition()));
+      this.initGeolocation(this.map, this.marker);
+    } else {
+      this.map.setCenter(position);
+      this.marker.setPosition(position);
+    }
   }
 
   setPosition(position) {
@@ -50,5 +62,34 @@ export class GhostMapsComponent implements AfterViewInit {
     }
     );
   }
+
+  initGeolocation(map, marker) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map.setCenter(pos);
+          marker.setPosition(pos);
+        },
+        function () {
+          this.handleLocationError(true, map.getCenter(), map);
+        }
+      );
+    } else {
+      this.handleLocationError(false, map.getCenter(), map);
+    }
+  }
+
+  handleLocationError(browserHasGeolocation, pos, map) {
+    /**
+     * @TODO show toast of info if geolocation no available
+     */
+    map.setCenter(pos);
+  }
+
+
 
 }
