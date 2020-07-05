@@ -36,6 +36,11 @@ export class SignInComponent implements OnInit {
   async signIn() {
     const email = this.loginForm.controls["email"].value;
     const password = this.loginForm.controls["password"].value;
-    return await this.authService.signIn(email, password);
+    try {
+      const user = await this.authService.signIn(email, password);
+      return user;
+    } catch (error) {
+      console.info(error);
+    }
   }
 }

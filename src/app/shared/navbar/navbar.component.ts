@@ -4,13 +4,15 @@ import {
   Renderer2,
   ViewChild,
   ElementRef,
-} from "@angular/core";
-import { Router } from "@angular/router";
-import { Location } from "@angular/common";
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
-import { AuthService } from "app/auth/auth.service";
-import { ROUTES } from "../../sidebar/sidebar.component";
-import { first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { AuthService } from './../../auth/auth.service';
+import { User } from './../../models/user';
+import { ROUTES } from '../../sidebar/sidebar.component';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +26,8 @@ export class NavbarComponent implements OnInit {
   private toggleButton;
   private sidebarVisible: boolean;
   public isLogged: boolean = false;
-  dataUser = JSON.parse(localStorage.getItem('user'));
+
+  public user$: Observable<User> = this.authService.afAuth.user;
 
   public isCollapsed = true;
   @ViewChild("navbar-cmp", { static: false }) button;
@@ -48,7 +51,6 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
-    this.getCurrentUser();
   }
 
   getTitle() {
@@ -103,7 +105,7 @@ export class NavbarComponent implements OnInit {
     this.sidebarVisible = false;
     html.classList.remove("nav-open");
   }
-  
+
   collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName("nav")[0];
@@ -117,15 +119,11 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  onLogout() {
-    this.authService.signOut();
-  }
-
-  getCurrentUser() {
-    this.authService.currentUser()
-    .pipe(first())
-    .subscribe(auth => {
-      this.isLogged = auth && this.authService.isLoggedIn;
-    })
+  async onLogout() {
+    try {
+      await this.authService.signOut();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -1,5 +1,9 @@
-import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
+import { AuthService } from './../auth.service';
+import { User } from './../../models/user';
 
 @Component({
   selector: 'app-verify-email',
@@ -7,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./verify-email.component.css']
 })
 export class VerifyEmailComponent {
+  public user$: Observable<User> = this.authService.afAuth.user;
 
   constructor(public authService: AuthService) { }
 
