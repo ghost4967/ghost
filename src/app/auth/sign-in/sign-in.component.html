@@ -21,11 +21,20 @@
             </form>
         </div>
         <div class="card-footer">
-            <div class="card-text text-center">
-                <span>¿No tienes una cuenta?<a routerLink="/auth/sign-up"> Regístrate</a></span>
-            </div>
-            <div class="card-text text-center">
-                <a routerLink="/auth/forgot-password">¿Olvidaste tu contraseña?</a>
+            <div class="row">
+                <div class="btn-group float-right col-xs-12 col-sm-10 col-md-12 mx-auto">
+                    <button type="button" class="btn btn-google" (click)="onGoogleLogin()">
+                        Iniciar Sesión con Google
+                    </button>
+                </div>
+                <div class="col-xs-12 col-sm-10 col-md-12 mx-auto">
+                    <div class="card-text text-center">
+                        <span>¿No tienes una cuenta?<a routerLink="/auth/sign-up"> Regístrate</a></span>
+                    </div>
+                    <div class="card-text text-center">
+                        <a routerLink="/auth/forgot-password">¿Olvidaste tu contraseña?</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

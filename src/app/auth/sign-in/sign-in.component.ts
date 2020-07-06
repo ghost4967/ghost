@@ -1,7 +1,9 @@
-import { AuthService } from './../auth.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { AuthService } from './../auth.service';
+import { User } from './../../models/user';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,7 +15,8 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +41,30 @@ export class SignInComponent implements OnInit {
     const password = this.loginForm.controls["password"].value;
     try {
       const user = await this.authService.signIn(email, password);
-      return user;
+      if (user) {
+        this.checkUserIsVerified(user);
+      }
     } catch (error) {
       console.info(error);
     }
+  }
+
+  async onGoogleLogin() {
+    try {
+      const user =  await this.authService.loginGoogle();
+      if (user) {
+        this.checkUserIsVerified(user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private checkUserIsVerified(user: User) {
+    if (user && user.emailVerified) {
+      this.router.navigate(['product']);
+    } else if (user) {
+      this.router.navigate(['/auth/verify-email-address']);
+    } 
   }
 }

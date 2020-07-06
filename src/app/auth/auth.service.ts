@@ -6,6 +6,7 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
 
+import { auth } from 'firebase/app';
 import { map, switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,6 +22,8 @@ export class AuthService {
   public user$: Observable<User>;
   readonly userNotRegister: string =
     "There is no user record corresponding to this identifier. The user may have been deleted.";
+  readonly invalidUser: string = 'The password is invalid or the user does not have a password.';
+  readonly emailUsed: string = 'The email address is already in use by another account.';
 
   constructor(
     public afs: AngularFirestore,
@@ -46,6 +49,19 @@ export class AuthService {
     );
   }
 
+  // Sign in with google
+  async loginGoogle(): Promise<User> {
+    try {
+      const { user } = await this.afAuth.signInWithPopup(
+        new auth.GoogleAuthProvider()
+      );
+      this.setUserData(user);
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // Sign in with email/password
   async signIn(email: string, password: string) {
     try {
@@ -67,18 +83,15 @@ export class AuthService {
         );
         this.router.navigate(["/auth/sign-in"]);
       }
+      return result.user;
     } catch (error) {
       if (error.message === this.userNotRegister) {
         this.notificationError(
-          `No hay registro de usuario correspondiente a este correo electronico.`
+          'No hay registro de usuario correspondiente a este correo electronico.'
         );
         this.router.navigate(["/auth/sign-in"]);
-      } else {
-        this.notificationError(
-          `El correo electronico todavia no ha sido validado, hemos enviado de nuevo un correo para qeu valide su correo electronico.`,
-          6000
-        );
-        this.sendVerificationMail();
+      } else if (error.message === this.invalidUser) {
+        this.notificationError('El correo electronico o contraseña no es válida.');
       }
       localStorage.removeItem("user");
     }
@@ -94,7 +107,9 @@ export class AuthService {
           this.setUserData(result.user);
         });
     } catch (error) {
-      this.notificationError(error.message);
+      if (error.message === this.emailUsed) {
+        this.notificationError('La dirección de correo electrónico ya está en uso por otra cuenta.');
+      }
     }
   }
 
