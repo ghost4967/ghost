@@ -34,10 +34,8 @@ export class AuthService {
     // Saving user data in localstorage when logged in and setting up null when logged out
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
-        console.log(user);
         if (user) {
           this.userData = user;
-          console.log(user);
           localStorage.setItem("user", JSON.stringify(this.userData));
           JSON.parse(localStorage.getItem("user"));
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -49,29 +47,33 @@ export class AuthService {
     );
   }
 
-  // Sign in with google
+  /**
+   * Sign in with google
+   */
   async loginGoogle(): Promise<User> {
     try {
       const { user } = await this.afAuth.signInWithPopup(
         new auth.GoogleAuthProvider()
       );
       this.setUserData(user);
+      this.notificationSuccess("Bienvenido");
       return user;
     } catch (error) {
-      console.log(error);
+      this.notificationError(error);
     }
   }
 
-  // Sign in with email/password
+  /**
+   * Sign in with email/password 
+   */
   async signIn(email: string, password: string) {
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(
         email,
         password
       );
-      this.setUserData(result.user);
       if (this.isLoggedIn(result.user)) {
-        this.setUserDataVerifycated(result.user);
+        this.setUserData(result.user);
         this.notificationSuccess("Bienvenido");
         localStorage.setItem("user", JSON.stringify(result.user));
         JSON.parse(localStorage.getItem("user"));
@@ -97,7 +99,11 @@ export class AuthService {
     }
   }
 
-  // Sign up with email/password
+  /**
+   * Sign up with email/password
+   * @param email the new user
+   * @param password the new user
+   */
   async signUp(email: string, password: string) {
     try {
       const result = await this.afAuth
@@ -113,6 +119,10 @@ export class AuthService {
     }
   }
 
+  /**
+   * Reset Password
+   * @param email the user
+   */
   async resetPassword(email: string): Promise<void> {
     try {
       this.notificationSuccess(
@@ -125,7 +135,9 @@ export class AuthService {
     }
   }
 
-  // Send email verfificaiton when new user sign up
+  /**
+   * Send email verfificaiton when new user sign up
+   */
   async sendVerificationMail() {
     try {
       (await this.afAuth.currentUser).sendEmailVerification();
@@ -136,36 +148,24 @@ export class AuthService {
     }
   }
 
-  // Returns true when user is looged in and email is verified
+  /**
+   * Returns true when user is looged in and email is verified
+   * @param user current user logged
+   */
   isLoggedIn(user: User): boolean {
     return user !== null && user.emailVerified !== false ? true : false;
   }
 
-  // Retunr the current user that is looged
+  /**
+   * Retunr the current user that is logged
+   */
   currentUser() {
     return this.afAuth.authState.pipe(map((auth) => auth));
   }
 
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  setUserData(user: User) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
-
-  //Sign out
+  /**
+   * Sign out
+   */
   async signOut(): Promise<void> {
     try {
       const result = await this.afAuth.signOut().then(() => {
@@ -179,7 +179,7 @@ export class AuthService {
     }
   }
 
-  private setUserDataVerifycated(user: User) {
+  private setUserData(user: User) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
