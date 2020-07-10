@@ -76,7 +76,6 @@ export class AuthService {
         this.setUserData(result.user);
         this.notificationSuccess("Bienvenido");
         localStorage.setItem("user", JSON.stringify(result.user));
-        JSON.parse(localStorage.getItem("user"));
         this.router.navigate(["product"]);
       } else {
         localStorage.removeItem("user");
