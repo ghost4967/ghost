@@ -8,15 +8,16 @@ import {
 
 import { auth } from 'firebase/app';
 import { map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { User } from './../models/user';
-import { Observable, of } from 'rxjs';
+import { RoleValidator } from './helpers/roleValidator';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService extends RoleValidator{
   userData: any; // Save logged in user data
   sendEmailToVerifyEmail: boolean = false;
   public user$: Observable<User>;
@@ -31,6 +32,7 @@ export class AuthService {
     public router: Router,
     private toastr: ToastrService
   ) {
+    super();
     // Saving user data in localstorage when logged in and setting up null when logged out
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
