@@ -1,0 +1,32 @@
+<div class="col-xs-12 col-sm-8 col-md-6 mx-auto">
+    <div class="card card-user" *ngIf="user$ | async as user; else loading">
+        <div class="card-header">
+            <h5 class="card-title">Gracias por registrarte</h5>
+        </div>
+        <div class="card-body text-center">
+            <div class="pl-lg-4">
+                <div class="form-group">
+                    <p class="text-center">Hemos enviado un correo electrónico de confirmación a
+                        <strong>{{user.email}}</strong></p>
+                    <p class="text-center">Verifique su correo electrónico y haga clic en el enlace para verificar su
+                        dirección de correo electrónico.
+                    </p>
+                </div>
+                <div class="btn-group">
+                    <i class="fa fa-redo-alt"></i>
+                    <button type="button" class="btn btn-primary" (click)="sendVerificationMail()">
+                        Reenviar correo electrónico de verificación
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="card-text text-center">
+                <span>¿O ya tienes una cuenta? <a routerLink="/auth/sign-in">Iniciar Sesion</a></span>
+            </div>
+        </div>
+    </div>
+    <ng-template #loading>
+        Cargando....
+    </ng-template>
+</div>
