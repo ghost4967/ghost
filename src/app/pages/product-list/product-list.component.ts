@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'app/service/product/product.service';
 import { ShoppingCartService } from '../../service/shoppingCart/shopping-cart.service';
-import {ShoppingCart } from '../../models/shoppingCart';
+import { ShoppingCart } from '../../models/shoppingCart';
 import { Product } from 'app/models/product';
 
 @Component({
@@ -12,13 +12,14 @@ import { Product } from 'app/models/product';
 export class ProductListComponent implements OnInit {
 
   shoppingCart: any;
-  productList: Array<any> = [];
+  productList: any = [];
   productsInCard: boolean;
   currentShopping: any = [];
   current: any = [];
   constructor(private productService: ProductService, private shoppingService: ShoppingCartService) {
     this.productService.getAll().subscribe(res => {
       this.productList = res;
+      console.log(res)
       this.shoppingProduct();
     });
   }
@@ -29,12 +30,15 @@ export class ProductListComponent implements OnInit {
   shoppingProduct() {
     this.shoppingService.get('userId1').subscribe(res => {
       this.shoppingCart = res;
-      this.shoppingCart.shoppingCart.forEach(element => {
-        if (this.productList.find(element2 => element2.name == element.product.name).name == element.product.name) {
-          this.productsInCard = true;
-          this.productList = this.productList.filter(element2 => element2.name != element.product.name)
-        }
-      });
+      if (this.shoppingCart != undefined) {
+        this.shoppingCart.shoppingCart.forEach(element => {
+          if (this.productList.find(element2 => element2._id == element.product._id)._id == element.product._id) {
+            this.productList = this.productList.filter(element2 => element2._id != element.product._id)
+            this.productsInCard = true;
+            console.log(this.productList)
+          }
+        });
+      }
     });
   }
 
@@ -46,7 +50,6 @@ export class ProductListComponent implements OnInit {
     this.shoppingService.getByIdToPromes('userId1').then(response => {
       this.current = response;
       if (this.current.shoppingCart != undefined) {
-        console.log(this.current.shoppingCart)
         this.current.shoppingCart.push(currentProduct);
         this.shoppingService.update(this.current);
       }

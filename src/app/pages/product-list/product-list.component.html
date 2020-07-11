@@ -1,9 +1,8 @@
 <div class="container-fluid">
-  <div class="alert col-md-12 col-sm-12 col-12" *ngIf="productsInCard == true; else NotProductsInCart">
+  <div class="alert col-md-12 col-sm-12 col-12" *ngIf="productsInCard == true">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     Usted tiene Productos en el carrito de compras
   </div>
-  <ng-template #NotProductsInCart>
     <div class="row">
       <div *ngFor="let product of productList" class="card col-md-3 col-sm-5 col-11">
         <div *ngIf="product != null">
@@ -25,5 +24,4 @@
         </div>
       </div>
     </div>
-  </ng-template>
 </div>

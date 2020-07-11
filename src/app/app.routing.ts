@@ -1,8 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+<<<<<<< HEAD
 import { NgModule } from '@angular/core';
 
+=======
+import { LayoutComponent } from './cart-module/layout.component'
+>>>>>>> modules
 export const AppRoutes: Routes = [
   {
     path: '',
