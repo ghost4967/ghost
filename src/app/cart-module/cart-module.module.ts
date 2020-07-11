@@ -6,6 +6,7 @@ import { CartComponent } from '../pages/cart/cart.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LayoutComponent } from './layout.component'
+import { LayoutRoutes } from './../cart-module/layout.module.routing';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LayoutComponent } from './layout.component'
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    LayoutRoutes
   ]
 })
 export class CartModule { }
