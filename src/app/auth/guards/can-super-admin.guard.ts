@@ -9,19 +9,18 @@ import { AuthService } from '../auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CanAdminGuard implements CanActivate {
+export class CanSuperAdminGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.user$.pipe(
       take(1),
-      map((user) => user && this.authService.isAdmin(user)),
-      tap((isAdmin) => {
-        if (!isAdmin) {
+      map((user) => user && this.authService.isSuperAdmin(user)),
+      tap((isSuperAdmin) => {
+        if (!isSuperAdmin) {
           window.alert('Acceso denegado. Debe tener permiso para administrar datos.');
         }
       })
     );
-  }
-  
+  } 
 }

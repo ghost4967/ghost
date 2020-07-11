@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 
 import { Observable } from 'rxjs';
 
+import { UserService } from 'app/service/user/user.service';
 import { AuthService } from './../../auth/auth.service';
 import { User } from './../../models/user';
 import { ROUTES } from '../../sidebar/sidebar.component';
@@ -25,7 +26,7 @@ export class NavbarComponent implements OnInit {
   private nativeElement: Node;
   private toggleButton;
   private sidebarVisible: boolean;
-  public isLogged: boolean = false;
+  public currentUser: any;
 
   public user$: Observable<User> = this.authService.afAuth.user;
 
@@ -37,11 +38,17 @@ export class NavbarComponent implements OnInit {
     private renderer: Renderer2,
     private element: ElementRef,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
+    this.user$.subscribe((user) =>
+      this.userService
+        .get(user.uid)
+        .subscribe((userFirebase) => (this.currentUser = userFirebase))
+    );
   }
 
   ngOnInit() {

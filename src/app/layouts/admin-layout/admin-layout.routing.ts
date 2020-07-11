@@ -15,7 +15,7 @@ export const AdminLayoutRoutes: Routes = [
       import('./../../auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'admin',
+    path: 'admin-dashboard',
     loadChildren: () =>
       import('./../../admin/admin.module').then((m) => m.AdminModule),
       canActivate: [CanAdminGuard],

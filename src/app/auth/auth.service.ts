@@ -74,6 +74,7 @@ export class AuthService extends RoleValidator{
         email,
         password
       );
+      console.log(result.user);
       if (this.isLoggedIn(result.user)) {
         this.setUserData(result.user);
         this.notificationSuccess("Bienvenido");
@@ -190,6 +191,7 @@ export class AuthService extends RoleValidator{
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
+      role: 'ADMIN',
     };
     return userRef.set(userData, {
       merge: true,
