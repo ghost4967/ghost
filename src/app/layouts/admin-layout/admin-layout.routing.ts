@@ -2,12 +2,12 @@ import { Routes } from '@angular/router';
 import { ProductModule } from './../../product-module/product-module.module'
 export const AdminLayoutRoutes: Routes = [
   {
-    path: 'carts',
+    path: '',
     loadChildren: () =>
       import('./../../cart-module/cart-module.module').then((m) => m.CartModule),
   },
   {
-    path: 'products',
+    path: '',
     loadChildren: () =>
       import('./../../product-module/product-module.module').then((m) => m.ProductModule),
   },{
