@@ -7,9 +7,8 @@ import { ProductComponent } from '../pages/product/product.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { productsRoutes } from './product.routing';
+import { productsRoutes } from './product.routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 
 @NgModule({
   declarations: [
@@ -19,9 +18,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(productsRoutes),
     FormsModule,
-    NgbModule
+    NgbModule,
+    productsRoutes
   ]
 })
 export class ProductModule { }
