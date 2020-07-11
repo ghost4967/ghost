@@ -7,7 +7,7 @@ export const AdminLayoutRoutes: Routes = [
       import('./../../cart-module/cart-module.module').then((m) => m.CartModule),
   },
   {
-    path: 'product',
+    path: 'products',
     loadChildren: () =>
       import('./../../product-module/product-module.module').then((m) => m.ProductModule),
   },{
