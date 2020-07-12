@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
 
   updateQuantity(product, quantity: number) {
     this.products.forEach(element => {
-      if (element.product.name == product.product.name) {
+      if (element.product._id == product.product._id) {
         element.quantity = quantity
         this.upDateProduct();
       }
