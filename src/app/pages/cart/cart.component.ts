@@ -1,9 +1,8 @@
-import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
-import { Product } from 'app/models/product';
-import { element } from 'protractor';
-import { ShoppingCart } from '../../models/shoppingCart';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
 import { ShoppingCartService } from '../../service/shoppingCart/shopping-cart.service';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-cart',
@@ -16,15 +15,14 @@ export class CartComponent implements OnInit {
   quantity: number = 1;
   cartSubTotal: number = 0;
   shoppingCard: any;
+  userId: any;
   constructor(private shoppingService: ShoppingCartService, private formBuilder: FormBuilder) {
-    let product: Product;
-    this.shoppingService.getByIdToPromes('userId1').then(res => {
-      console.log(res)
-      if (res != undefined) {
+    this.userId = JSON.parse(localStorage.getItem("user")).uid;
+    this.shoppingService.getByIdToPromes(this.userId).then(res => {
+      if (!isUndefined(res)) {
         this.shoppingCard = res;
         this.products = res;
         this.products = this.products.shoppingCart
-        console.log(this.products)
         this.recalculate();
       }
     });
@@ -43,7 +41,7 @@ export class CartComponent implements OnInit {
     this.recalculate();
   }
 
-  upDateProduct(){
+  upDateProduct() {
     this.shoppingCard.shoppingCart = this.products;
     this.shoppingService.update(this.shoppingCard)
   }
@@ -57,8 +55,10 @@ export class CartComponent implements OnInit {
 
   private recalculate() {
     this.cartSubTotal = 0;
-    this.products.forEach(element => {
-      this.cartSubTotal += (element.quantity * element.product.price);
-    });
+    if (!isUndefined(this.products)) {
+      this.products.forEach(element => {
+        this.cartSubTotal += (element.quantity * element.product.price);
+      });
+    }
   }
 }
