@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
       this.shoppingCart = res;
       if (!isUndefined(this.shoppingCart)) {
         this.shoppingCart.shoppingCart.forEach(element => {
-          if (this.productList.find(element2 => element2._id == element.product._id)._id == element.product._id) {
+          if (!isUndefined(this.productList.find(element2 => element2._id == element.product._id))) {
             this.productList = this.productList.filter(element2 => element2._id != element.product._id)
             this.productsInCard = true;
           }
