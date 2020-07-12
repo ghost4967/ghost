@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ProductService } from '../../service/product/product.service';
-import { StorageService } from '../../service/storage/storage';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { StorageService } from '../../service/storage/storage';
+
+import { ProductService } from '../../service/product/product.service';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +26,6 @@ export class ProductComponent implements OnInit {
   
   ngOnInit(): void {
     this.productService.getAll().subscribe(res => this.productList.push(res[0]))
-    console.log(this.productList)
   }
     
       
@@ -40,7 +40,6 @@ export class ProductComponent implements OnInit {
       ref.getDownloadURL().subscribe(urlImage => {
         this.urlImage = urlImage;
         this.setProduct();
-        console.log(urlImage)
         this.productService.insert(this.product);
       })
     })).subscribe();
@@ -74,9 +73,4 @@ export class ProductComponent implements OnInit {
   createProduct() {
     this.onUpload();
   }
-
-  addProduct(product){
-    console.log(product)
-  }
-
 }
