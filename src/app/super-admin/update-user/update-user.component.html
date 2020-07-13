@@ -1,0 +1,50 @@
+<div class="col-xs-12 col-sm-12 col-md-12 mx-auto">
+    <div class="card card-user">
+        <div class="card-header">
+            <h5 class="card-title">Crear Usuario</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="createUserForm">
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4 pr-1">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" formControlName="displayName" class="form-control" placeholder="Nombre Completo" required>
+                                <p *ngIf="displayName.touched && displayName.errors?.required" class="alert-danger"><sup>*</sup>El nombre es requerido</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pr-1">
+                            <div class="form-group">
+                                <label>Correo Electronico</label>
+                                <input type="email" formControlName="email" class="form-control" placeholder="Dirección de correo electrónico" required>
+                                <div *ngIf="email.touched && email.errors?.required" class="alert-danger"><sup>*</sup>El email es requerido</div>
+                                <div *ngIf="email.errors?.email" class="alert-danger"><sup>*</sup>El correo electrónico debe ser una dirección de correo electrónico válida</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pr-1">
+                            <div class="form-group">
+                                <label>Rol</label>
+                                <select id="inputState" class="form-control" formControlName="role"> 
+                                    <option value="USER">User</option>
+                                    <option value="ADMIN">Admin</option>
+                                    <option value="SUPERADMIN">SuperAdmin</option>
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group float-right">
+                        <button type="button" class="btn btn-primary" (click)="saveUser()" [disabled]="!createUserForm.valid">
+                            Crear Usuario
+                        </button>
+                    </div>
+                    <div class="btn-group float-left">
+                        <button type="button" class="btn btn-secondary" (click)="goUserList()" >
+                           Atras
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -106,12 +106,14 @@ export class AuthService extends RoleValidator{
    * @param email the new user
    * @param password the new user
    */
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string, sendVerification: boolean = true) {
     try {
       const result = await this.afAuth
         .createUserWithEmailAndPassword(email, password)
         .then((result) => {
-          this.sendVerificationMail();
+          if(sendVerification){
+            this.sendVerificationMail();
+          }
           this.setUserData(result.user);
         });
     } catch (error) {
@@ -133,7 +135,7 @@ export class AuthService extends RoleValidator{
       this.router.navigate(["/auth/sign-in"]);
       return this.afAuth.sendPasswordResetEmail(email);
     } catch (error) {
-      console.log(error);
+      this.notificationError(error);
     }
   }
 
@@ -191,7 +193,7 @@ export class AuthService extends RoleValidator{
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      role: 'ADMIN',
+      role: user.role !== 'ADMIN' ? 'USER': 'ADMIN'
     };
     return userRef.set(userData, {
       merge: true,

@@ -19,5 +19,10 @@ export const AdminLayoutRoutes: Routes = [
     loadChildren: () =>
       import('./../../admin/admin.module').then((m) => m.AdminModule),
       canActivate: [CanAdminGuard],
+  },
+  {
+    path: 'user-list',
+    loadChildren: () =>
+    import('./../../super-admin/super-admin.module').then((m) => m.SuperAdminModule)
   }
 ];

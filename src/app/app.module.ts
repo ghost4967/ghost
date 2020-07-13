@@ -11,6 +11,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { ToastrModule } from "ngx-toastr";
 
 import { CanAdminGuard } from './auth/guards/can-admin.guard';
+import { CanSuperAdminGuard } from './auth/guards/can-super-admin.guard';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
@@ -49,7 +50,7 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
     AngularFireAuthModule,
     AngularFireStorageModule
   ],
-  providers: [CanAdminGuard],
+  providers: [CanAdminGuard, CanSuperAdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
