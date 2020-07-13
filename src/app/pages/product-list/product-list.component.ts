@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ProductService } from 'app/service/product/product.service';
 import { ShoppingCartService } from '../../service/shoppingCart/shopping-cart.service';
-import {ShoppingCart } from '../../models/shoppingCart';
-import { Product } from 'app/models/product';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-product-list',
@@ -12,10 +12,11 @@ import { Product } from 'app/models/product';
 export class ProductListComponent implements OnInit {
 
   shoppingCart: any;
-  productList: Array<any> = [];
+  productList: any = [];
   productsInCard: boolean;
   currentShopping: any = [];
   current: any = [];
+  userId: any;
   constructor(private productService: ProductService, private shoppingService: ShoppingCartService) {
     this.productService.getAll().subscribe(res => {
       this.productList = res;
@@ -24,17 +25,20 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userId = JSON.parse(localStorage.getItem("user")).uid;
   }
 
   shoppingProduct() {
-    this.shoppingService.get('userId1').subscribe(res => {
+    this.shoppingService.get(this.userId).subscribe(res => {
       this.shoppingCart = res;
-      this.shoppingCart.shoppingCart.forEach(element => {
-        if (this.productList.find(element2 => element2.name == element.product.name).name == element.product.name) {
-          this.productsInCard = true;
-          this.productList = this.productList.filter(element2 => element2.name != element.product.name)
-        }
-      });
+      if (!isUndefined(this.shoppingCart)) {
+        this.shoppingCart.shoppingCart.forEach(element => {
+          if (!isUndefined(this.productList.find(element2 => element2._id == element.product._id))) {
+            this.productList = this.productList.filter(element2 => element2._id != element.product._id)
+            this.productsInCard = true;
+          }
+        });
+      }
     });
   }
 
@@ -43,17 +47,16 @@ export class ProductListComponent implements OnInit {
       product: product,
       quantity: 1
     }
-    this.shoppingService.getByIdToPromes('userId1').then(response => {
+    this.shoppingService.getByIdToPromes(this.userId).then(response => {
       this.current = response;
-      if (this.current.shoppingCart != undefined) {
-        console.log(this.current.shoppingCart)
+      if (!isUndefined(this.current.shoppingCart)) {
         this.current.shoppingCart.push(currentProduct);
         this.shoppingService.update(this.current);
       }
       else {
         this.currentShopping.push(currentProduct);
         const shoppingList = {
-          userId: 'userId1',
+          userId: this.userId,
           shoppingCart: this.currentShopping,
         }
         this.shoppingService.update(shoppingList);

@@ -21,18 +21,12 @@ import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { ProductComponent } from './pages/product/product.component';
-import { CartComponent } from './pages/cart/cart.component';
 import { environment } from '../environments/environment';
-import { ProductListComponent } from './pages/product-list/product-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    ProductComponent,
-    CartComponent,
-    ProductListComponent
   ],
   imports: [
     BrowserAnimationsModule,
