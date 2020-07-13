@@ -62,7 +62,7 @@ export class SignInComponent implements OnInit {
 
   private checkUserIsVerified(user: User) {
     if (user && user.emailVerified) {
-      this.router.navigate(['product']);
+      this.router.navigate(['/']);
     } else if (user) {
       this.router.navigate(['/auth/verify-email-address']);
     } 

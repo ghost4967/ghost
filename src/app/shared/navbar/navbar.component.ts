@@ -44,11 +44,13 @@ export class NavbarComponent implements OnInit {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
-    this.user$.subscribe((user) =>
-      this.userService
-        .get(user.uid)
-        .subscribe((userFirebase) => (this.currentUser = userFirebase))
-    );
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.userService
+          .get(user.uid)
+          .subscribe((userFirebase) => (this.currentUser = userFirebase));
+      }
+    });
   }
 
   ngOnInit() {

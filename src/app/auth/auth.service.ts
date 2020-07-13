@@ -78,7 +78,7 @@ export class AuthService extends RoleValidator{
         this.setUserData(result.user);
         this.notificationSuccess("Bienvenido");
         localStorage.setItem("user", JSON.stringify(result.user));
-        this.router.navigate(["product"]);
+        this.router.navigate(["/"]);
       } else {
         localStorage.removeItem("user");
         this.notificationError(
@@ -191,8 +191,7 @@ export class AuthService extends RoleValidator{
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      role: user.role
+      emailVerified: user.emailVerified
     };
     return userRef.set(userData, {
       merge: true,
