@@ -192,7 +192,7 @@ export class AuthService extends RoleValidator{
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      role: user.role !== 'ADMIN' ? 'USER': 'ADMIN'
+      role: user.role
     };
     return userRef.set(userData, {
       merge: true,
