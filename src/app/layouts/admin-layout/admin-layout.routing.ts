@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { CanSuperAdminGuard } from './../../auth/guards/can-super-admin.guard';
 import { CanAdminGuard } from './../../auth/guards/can-admin.guard'
 export const AdminLayoutRoutes: Routes = [
   {
@@ -25,6 +26,7 @@ export const AdminLayoutRoutes: Routes = [
   {
     path: 'user-list',
     loadChildren: () =>
-    import('./../../super-admin/super-admin.module').then((m) => m.SuperAdminModule)
+    import('./../../super-admin/super-admin.module').then((m) => m.SuperAdminModule),
+     canActivate: [CanSuperAdminGuard]
   }
 ];
