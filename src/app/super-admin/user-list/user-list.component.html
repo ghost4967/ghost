@@ -4,12 +4,6 @@
             <h5 class="card-title">Lista de Usuarios</h5>
         </div>
         <div class="card-body" *ngIf="userList.length > 0; else loadingUser">
-            <!-- <div class="float-right">
-                <button type="submit" class="btn btn-primary btn-round mt-3" (click)="updateUser(user.uid)">
-                  crear Usuario
-                </button>
-              </div> -->
-      
             <div class="table-responsive">
                 <table class="table">
                     <thead class=" text-primary">
@@ -25,9 +19,10 @@
                             <td>{{user.email}}</td>
                             <td>{{user.emailVerified}}</td>
                             <td>{{user.role}}</td>
-                            <td><button type="submit" class="btn btn-primary btn-round mt-3" (click)="updateUser(user.uid)">
-                                Editar Usuario
-                              </button> 
+                            <td><button type="submit" class="btn btn-primary btn-round mt-3"
+                                    (click)="updateUser(user.uid)">
+                                    Editar Usuario
+                                </button>
                             </td>
                         </tr>
                     </tbody>

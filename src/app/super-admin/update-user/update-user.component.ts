@@ -91,10 +91,6 @@ export class UpdateUserComponent implements OnInit {
     return this.createUserForm.get('displayName');
   }
 
-  get password() {
-    return this.createUserForm.get('password');
-  }
-
   get email() {
     return this.createUserForm.get('email');
   }

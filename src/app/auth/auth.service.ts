@@ -74,7 +74,6 @@ export class AuthService extends RoleValidator{
         email,
         password
       );
-      console.log(result.user);
       if (this.isLoggedIn(result.user)) {
         this.setUserData(result.user);
         this.notificationSuccess("Bienvenido");
