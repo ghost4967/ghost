@@ -11,7 +11,7 @@
         <p class="card-text">{{product.product.description}}</p>
         <input type="number" min="1" value="{{product.quantity}}"
           (change)="updateQuantity(product, $event.target.value)" class="col-4">
-        <button class="btn-sm btn-danger float-right" (click)="removeLine(product.product._id)">
+        <button class="btn-sm btn float-right" style="background-color: #f44336;" (click)="remove(product.product._id)">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
       </div>
@@ -27,7 +27,7 @@
       {{cartSubTotal  | currency:"Bs."}}
     </div>
     <div class="col-md-8">
-      <button type="submit" class="btn btn-danger mt-4">Realizar Pedido</button>
+      <button type="submit" class="btn btn-primary mt-4">Realizar Pedido</button>
     </div>
   </div>
 </div>

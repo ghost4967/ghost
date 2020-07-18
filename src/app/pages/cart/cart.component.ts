@@ -46,7 +46,7 @@ export class CartComponent implements OnInit {
     this.shoppingService.update(this.shoppingCard)
   }
 
-  removeLine(id: string) {
+  remove(id: string) {
     const index = this.products.findIndex(line => line.product._id === id);
     this.products.splice(index, 1);
     this.upDateProduct();
@@ -55,10 +55,15 @@ export class CartComponent implements OnInit {
 
   private recalculate() {
     this.cartSubTotal = 0;
+    this.cartSubTotal = this.calculate(this.cartSubTotal, this.products);
+  }
+
+  public calculate(amount, productList) {
     if (!isUndefined(this.products)) {
-      this.products.forEach(element => {
-        this.cartSubTotal += (element.quantity * element.product.price);
+      productList.forEach(element => {
+        amount += (element.quantity * element.product.price);
       });
     }
+    return amount
   }
 }
