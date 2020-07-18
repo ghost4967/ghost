@@ -8,8 +8,10 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
-import { ToastrModule } from "ngx-toastr";
+import { ToastrModule } from 'ngx-toastr';
 
+import { CanAdminGuard } from './auth/guards/can-admin.guard';
+import { CanSuperAdminGuard } from './auth/guards/can-super-admin.guard';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
@@ -22,14 +24,11 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-  ],
+  declarations: [AppComponent, AdminLayoutComponent],
   imports: [
     BrowserAnimationsModule,
     RouterModule.forRoot(AppRoutes, {
-      useHash: true
+      useHash: true,
     }),
     SidebarModule,
     NavbarModule,
@@ -40,9 +39,9 @@ import { environment } from '../environments/environment';
     AngularFireDatabaseModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CanAdminGuard, CanSuperAdminGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -8,15 +8,16 @@ import {
 
 import { auth } from 'firebase/app';
 import { map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { User } from './../models/user';
-import { Observable, of } from 'rxjs';
+import { RoleValidator } from './helpers/roleValidator';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService extends RoleValidator{
   userData: any; // Save logged in user data
   sendEmailToVerifyEmail: boolean = false;
   public user$: Observable<User>;
@@ -31,6 +32,7 @@ export class AuthService {
     public router: Router,
     private toastr: ToastrService
   ) {
+    super();
     // Saving user data in localstorage when logged in and setting up null when logged out
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -76,7 +78,7 @@ export class AuthService {
         this.setUserData(result.user);
         this.notificationSuccess("Bienvenido");
         localStorage.setItem("user", JSON.stringify(result.user));
-        this.router.navigate(["product"]);
+        this.router.navigate(["/"]);
       } else {
         localStorage.removeItem("user");
         this.notificationError(
@@ -103,12 +105,14 @@ export class AuthService {
    * @param email the new user
    * @param password the new user
    */
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string, sendVerification: boolean = true) {
     try {
       const result = await this.afAuth
         .createUserWithEmailAndPassword(email, password)
         .then((result) => {
-          this.sendVerificationMail();
+          if(sendVerification){
+            this.sendVerificationMail();
+          }
           this.setUserData(result.user);
         });
     } catch (error) {
@@ -130,7 +134,7 @@ export class AuthService {
       this.router.navigate(["/auth/sign-in"]);
       return this.afAuth.sendPasswordResetEmail(email);
     } catch (error) {
-      console.log(error);
+      this.notificationError(error);
     }
   }
 
@@ -187,7 +191,7 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
+      emailVerified: user.emailVerified
     };
     return userRef.set(userData, {
       merge: true,

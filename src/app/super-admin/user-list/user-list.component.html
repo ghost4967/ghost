@@ -1,0 +1,38 @@
+<div class="col-xs-12 col-sm-12 col-md-12 mx-auto">
+    <div class="card card-user">
+        <div class="card-header">
+            <h5 class="card-title">Lista de Usuarios</h5>
+        </div>
+        <div class="card-body" *ngIf="userList.length > 0; else loadingUser">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class=" text-primary">
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Correo Verificado</th>
+                        <th>Rol</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of userList">
+                            <td>{{user.displayName}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.emailVerified}}</td>
+                            <td>{{user.role}}</td>
+                            <td><button type="submit" class="btn btn-primary btn-round mt-3"
+                                    (click)="updateUser(user.uid)">
+                                    Editar Usuario
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <ng-template #loadingUser>
+            <ngx-loading-x [show]="load"></ngx-loading-x>
+        </ng-template>
+        <div class="card-footer">
+        </div>
+    </div>
+</div>
