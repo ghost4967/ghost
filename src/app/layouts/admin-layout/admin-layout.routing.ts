@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
-import { ProductModule } from './../../product-module/product-module.module'
+
+import { CanSuperAdminGuard } from './../../auth/guards/can-super-admin.guard';
+import { CanAdminGuard } from './../../auth/guards/can-admin.guard'
 export const AdminLayoutRoutes: Routes = [
   {
     path: 'cart',
@@ -15,4 +17,16 @@ export const AdminLayoutRoutes: Routes = [
   loadChildren: () =>
     import('./../../auth/auth.module').then((m) => m.AuthModule),
   },
+  {
+    path: 'admin-dashboard',
+    loadChildren: () =>
+      import('./../../admin/admin.module').then((m) => m.AdminModule),
+      canActivate: [CanAdminGuard],
+  },
+  {
+    path: 'user-list',
+    loadChildren: () =>
+    import('./../../super-admin/super-admin.module').then((m) => m.SuperAdminModule),
+     canActivate: [CanSuperAdminGuard]
+  }
 ];
