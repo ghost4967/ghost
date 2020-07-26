@@ -26,14 +26,12 @@ export class GhostMapsComponent implements AfterViewInit {
     map: this.map
   });
 
-  constructor() { }
-
   ngAfterViewInit() {
     const position = new google.maps.LatLng(this.lat, this.lng);
     this.initMap(position);
   }
 
-  initMap(position) {
+  initMap(position: google.maps.LatLng) {
     this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
     this.marker.setMap(this.map);
     this.marker.setDraggable(this.mode === Modes.Edit);
