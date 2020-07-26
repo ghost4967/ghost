@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { Modes } from './modes';
 
 @Component({
@@ -11,6 +11,7 @@ export class GhostMapsComponent implements AfterViewInit {
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
   map: google.maps.Map;
   private _mode = '';
+  @Output() positionEmitter = new EventEmitter<object>();
   @Input() lat: number = -17.4131228;
   @Input() lng: number = -66.0939994;
   @Input('mode')
@@ -46,11 +47,17 @@ export class GhostMapsComponent implements AfterViewInit {
 
   setPosition(position) {
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ location: position }, function (results, status) {
+    geocoder.geocode({ location: position }, this.handlePosition());
+  }
+
+  handlePosition() {
+    const emitter = this.positionEmitter;
+    return function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        /**
-         * @TODO do something with the response { results[0]: { formatted_address, geometry } }
-         */
+        emitter.emit({
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng() 
+        });
       }
       else {
         /**
@@ -58,7 +65,6 @@ export class GhostMapsComponent implements AfterViewInit {
          */
       }
     }
-    );
   }
 
   initGeolocation(map, marker) {
