@@ -94,6 +94,4 @@ export class GhostMapsComponent implements AfterViewInit {
     map.setCenter(pos);
   }
 
-
-
 }

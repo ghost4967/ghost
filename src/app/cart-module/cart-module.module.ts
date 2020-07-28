@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CartComponent } from '../pages/cart/cart.component';
 import { PaymentComponent } from '../pages/payment/payment.component';
-import { GhostGoogleMapsModule } from '..//shared/google-maps/ghost-maps.module';
+import { GhostGoogleMapsModule } from '../shared/google-maps/ghost-maps.module';
 import { LayoutRoutes } from './layout-routing.module';
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,16 +6,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent {
 
   paymentForm: FormGroup;
   mapMode: String = 'edit';
 
   constructor(private formBuilder: FormBuilder) {
     this.initForm();
-  }
-
-  ngOnInit(): void {
   }
 
   procedToCheckout() {
