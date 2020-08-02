@@ -22,6 +22,7 @@ import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { environment } from '../environments/environment';
+import { GhostGoogleMapsModule } from './shared/google-maps/ghost-maps.module';
 
 @NgModule({
   declarations: [AppComponent, AdminLayoutComponent],
@@ -35,6 +36,7 @@ import { environment } from '../environments/environment';
     ToastrModule.forRoot(),
     FooterModule,
     FixedPluginModule,
+    GhostGoogleMapsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     ReactiveFormsModule,
