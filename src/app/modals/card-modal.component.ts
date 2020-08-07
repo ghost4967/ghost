@@ -29,20 +29,20 @@ export class cardModalComponent {
   }
 
   InitModal() {
-    this.shoppingService.get(this.userId).subscribe(res => {
-      this.shoppingCard = res;
-      if (!isUndefined(this.shoppingCard)) {
-        this.products = this.shoppingCard.shoppingCart.find(element => element.product._id == this.productId);
+    this.shoppingService.getShoppingCartByUserId(this.userId, "pendding").subscribe(res => {
+      this.shoppingCard = res[0];
+      if (!isUndefined(this.shoppingCard) && !isUndefined(this.shoppingCard.shoppingCart)) {
+        this.products = this.shoppingCard.shoppingCart.find(element => element.product._id == this.productId);    
+        this.calculate(this.products)
       }
     });
-
   }
 
 
   updateQuantity(product, quantity: number) {
     product.quantity = quantity
     this.upDateProduct(product)
-    this.calculate(this.amount, product)
+    this.calculate(product)
   }
 
   upDateProduct(product) {
@@ -54,17 +54,16 @@ export class cardModalComponent {
     this.shoppingService.update(this.shoppingCard)
   }
 
-  calculate(amount, product) {
-    console.log(product)
-    // if (!isUndefined(this.products)) {
-    //   amount += (product.quantity * product.product.price);
-    // }
-    // return amount
+  calculate(product) {
+    this.amount = 0
+    if (!isUndefined(product)) {
+      this.amount += (product.quantity * product.product.price);
+    }
   }
 
   remove(id: string) {
     this.shoppingCard.shoppingCart.filter(element => element.product._id != id)
-    this.calculate(this.amount, this.products);
+    this.calculate(this.products);
   }
 
   open(content) {

@@ -1,38 +1,44 @@
 <button (click)="open(mymodal)" type="submit" class="btn btn-primary btn-round mt-3">Añadir</button>
-
-<ng-template #mymodal let-modal>
+<ng-template #mymodal let-modal (click)="open(mymodal)">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">×</span>
     </button>
   </div>
   <div class="container-fluid">
-
     <div class="modal-body">
       <div *ngIf="products != null || undefined != products || products != []" class="row">
-        <div class="card col-md-8 col-sm-8 col-12">
-          <div *ngIf="products.product != undefined">
-            <img class="card-img-top" src="{{products.product.image}}" alt="Card image cap" width="100" height="150">
-            <div class="card-body">
-              <h5 class="card-title" style="display: inline; margin-right: 15%;">{{products.product.name}}</h5>
-              <h5 class="card-title text-right" style="display: inline;">{{products.product.price}} Bs.</h5>
+        <div>
+          <div *ngIf="products  != undefined; else loadingUser">
+            <img class="col-md-5 col-sm-5 col-5" style="margin-bottom: 5%;" src="{{products.product.image}}" width="280"
+              height="200">
+            <div>
+              <h5 style="display: inline; margin-right: 15%;">{{products.product.name}}</h5>
+              <h5 class="text-right" style="display: inline;">{{products.product.price}} Bs.</h5>
             </div>
-            <h6 class="card-text">{{products.product.typeUnity}} - {{products.product.quantity}}</h6>
-            <p class="card-text">{{products.product.description}}</p>
-            <input type="number" min="1" value="{{products.quantity}}"
+            <p>{{products.product.typeUnity}} - {{products.product.quantity}}</p>
+            <p>{{products.product.description}}</p>
+            <input stype="number" min="1" value="{{products.quantity}}"
               (change)="updateQuantity(products, $event.target.value)" class="col-4">
-            <button class="btn-sm btn float-right" style="background-color: #f44336;"  (click)="remove(products.product._id)">
+            <button class="btn-sm btn float-right" style="background-color: #f44336;"
+              (click)="remove(products.product._id)">
               <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
           </div>
-          <div class="card-body text-right">
+          <ng-template #loadingUser>
+            <ngx-loading-x [show]="load"></ngx-loading-x>
+          </ng-template>
+          <div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    <div>
+
+      <h5>Subtotal: {{amount  | currency:"Bs."}}</h5>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Ok</button>
   </div>
 </ng-template>
