@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { NgxLoadingXModule } from 'ngx-loading-x';
+
+
+import{ cardModalComponent } from '../modals/card-modal.component'
 import { ProductListComponent } from '../pages/product-list/product-list.component';
 import { ProductComponent } from '../pages/product/product.component';
 import { productsRoutes } from './product-routing.module';
@@ -10,14 +14,16 @@ import { productsRoutes } from './product-routing.module';
 @NgModule({
   declarations: [
     ProductComponent,
-    ProductListComponent
+    ProductListComponent,
+    cardModalComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
     productsRoutes,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxLoadingXModule
   ]
 })
 export class ProductModule { }
