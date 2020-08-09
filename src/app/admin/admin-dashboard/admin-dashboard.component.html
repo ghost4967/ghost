@@ -4,6 +4,32 @@
             <h5 class="card-title">Lista de Carritos de Compras</h5>
         </div>
         <div class="card-body text-center">
+            <div class="card-body" *ngIf="cartList.length > 0; else loadingCart">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Correo Verificado</th>
+                            <th>Rol</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of cartList">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <ng-template #loadingCart>
+                <ngx-loading-x [show]="load"></ngx-loading-x>
+            </ng-template>
         </div>
         <div class="card-footer">
         </div>
