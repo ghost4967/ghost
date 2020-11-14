@@ -16,7 +16,7 @@ export class cardModalComponent {
   title = 'appBootstrap';
   closeResult: string;
   userId: any;
-  shoppingCard: any = [];
+  shoppingCart: any = [];
   products: any;
   amount: any = 0;
   total: any;
@@ -29,10 +29,10 @@ export class cardModalComponent {
   }
 
   InitModal() {
-    this.shoppingService.getShoppingCartByUserId(this.userId, "pendding").subscribe(res => {
-      this.shoppingCard = res[0];
-      if (!isUndefined(this.shoppingCard) && !isUndefined(this.shoppingCard.shoppingCart)) {
-        this.products = this.shoppingCard.shoppingCart.find(element => element.product._id == this.productId);    
+    this.shoppingService.getShoppingCartByUserId(this.userId, "STARTED").subscribe(res => {
+      this.shoppingCart = res[0];
+      if (!isUndefined(this.shoppingCart) && !isUndefined(this.shoppingCart.shoppingCart)) {
+        this.products = this.shoppingCart.shoppingCart.find(element => element.product._id == this.productId);
         this.calculate(this.products)
       }
     });
@@ -46,12 +46,12 @@ export class cardModalComponent {
   }
 
   upDateProduct(product) {
-    this.shoppingCard.shoppingCart.forEach(element => {
+    this.shoppingCart.shoppingCart.forEach(element => {
       if (element.product._id == product.product._id) {
         element = product;
       }
     });
-    this.shoppingService.update(this.shoppingCard)
+    this.shoppingService.update(this.shoppingCart)
   }
 
   calculate(product) {
@@ -62,7 +62,9 @@ export class cardModalComponent {
   }
 
   remove(id: string) {
-    this.shoppingCard.shoppingCart.filter(element => element.product._id != id)
+    const shopp = this.shoppingCart.shoppingCart.filter(element => element.product._id != id)
+    this.shoppingCart.shoppingCart = shopp;
+    this.shoppingService.update(this.shoppingCart)
     this.calculate(this.products);
   }
 

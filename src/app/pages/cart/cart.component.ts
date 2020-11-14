@@ -18,7 +18,7 @@ export class CartComponent implements OnInit {
   userId: any;
   constructor(private shoppingService: ShoppingCartService, private formBuilder: FormBuilder) {
     this.userId = JSON.parse(localStorage.getItem("user")).uid;
-    this.shoppingService.getShoppingCart(this.userId, "pendding").subscribe(res => {
+    this.shoppingService.getShoppingCart(this.userId, "STARTED").subscribe(res => {
       if (!isUndefined(res)) {
         this.shoppingCard = res[0];
         this.products = res[0];

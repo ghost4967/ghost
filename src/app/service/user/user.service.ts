@@ -26,6 +26,12 @@ export class UserService {
     .valueChanges();
   }
 
+  getByIdToPromes(id: string) {
+    return this.firestore
+      .collection(this.collectionName)
+      .doc(id).get().toPromise().then((item) => ({ id: item.id, ...item.data() }))
+  }
+
   update(user: User) {
     return this.firestore.collection(this.collectionName).doc(user.uid).set(user);
   }

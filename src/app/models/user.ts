@@ -8,4 +8,5 @@ export interface User {
   emailVerified?: boolean;
   password?: string;
   role?: Roles;
+  cartId?: string;
 }

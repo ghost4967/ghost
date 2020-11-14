@@ -27,9 +27,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAll().subscribe(res => this.productList.push(res[0]))
   }
-    
       
-  
   onUpload() {
     const id = Math.random().toString(36).substring(2);
     const filePath = `uploads/profile_${id}`;
